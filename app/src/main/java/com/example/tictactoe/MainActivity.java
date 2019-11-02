@@ -16,7 +16,6 @@ public class MainActivity extends AppCompatActivity {
     int activePlayer=0;
     boolean gameActive=true;
     int moves=0;
-
     public void popup(View view){
         ImageView counter=(ImageView) view;
         int tappedCounter=Integer.parseInt(counter.getTag().toString());
@@ -34,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
                 moves++;
                 activePlayer = 0;
             }
-            counter.animate().scaleX(1f).scaleY(1f).rotation(360).setDuration(200);
+            counter.animate().scaleX(1f).scaleY(1f).rotationBy(360).setDuration(200);
             for (int[] winningPosition : winningPositions) {
                 if (gameState[winningPosition[0]] == gameState[winningPosition[1]] && gameState[winningPosition[1]] == gameState[winningPosition[2]] && gameState[winningPosition[0]] != 2) {
                     gameActive=false;

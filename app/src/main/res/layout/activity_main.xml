@@ -157,6 +157,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:text="TextView"
+        android:textColor="#000000"
         android:textSize="18sp"
         android:visibility="invisible"
         app:fontFamily="serif"
@@ -166,6 +167,7 @@
 
     <Button
         android:id="@+id/playAgainButton"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -174,8 +176,12 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="8dp"
+        android:background="@android:drawable/screen_background_light"
         android:onClick="playAgain"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:text="Play Again"
+        android:textColor="#27862A"
         android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/gridLayout"
         app:layout_constraintEnd_toEndOf="parent"
