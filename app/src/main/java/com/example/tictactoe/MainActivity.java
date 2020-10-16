@@ -11,16 +11,41 @@ import android.widget.ImageView;
 import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
     //0:zero 1:cross 2:empty
-    int [] gameState={2,2,2,2,2,2,2,2,2};
-    int [][] winningPositions={{0,1,2},{3,4,5},{6,7,8},{0,3,6},{1,4,7},{2,5,8},{0,4,8},{2,4,6}};
+
+    int [] gameState = {2, 2, 2, 2, 2, 2, 2, 2, 2};
+
+    //positions
+    //+---+---+---+
+    //| 0 | 1 | 2 |
+    //| 3 | 4 | 5 |
+    //| 6 | 7 | 8 |
+    //+---+---+---+
+
+    int [][] winningPositions = {   {0, 1, 2},
+                                    {3, 4, 5},
+                                    {6, 7, 8},
+                                    {0, 3, 6},
+                                    {1, 4, 7},
+                                    {2, 5, 8},
+                                    {0, 4, 8},
+                                    {2, 4, 6} };
+    //Decide the player turn
     int activePlayer=0;
-    boolean gameActive=true;
+    boolean gameActive=true; //Game status
     int moves=0;
+
     public void popup(View view){
-        ImageView counter=(ImageView) view;
-        int tappedCounter=Integer.parseInt(counter.getTag().toString());
-        if(gameState[tappedCounter]==2 &&  gameActive) {
+
+        //get which one of the 9 box is clicked
+        ImageView counter = (ImageView) view;
+        int tappedCounter = Integer.parseInt(counter.getTag().toString());
+
+        if(gameState[tappedCounter] == 2 && gameActive) {
+
+            //set that box symbol for that player
             gameState[tappedCounter] = activePlayer;
+
+            //for animation
             counter.setScaleX(0f);
             counter.setScaleY(0f);
             Log.i("Tag",counter.getTag().toString());
@@ -33,36 +58,53 @@ public class MainActivity extends AppCompatActivity {
                 moves++;
                 activePlayer = 0;
             }
+
             counter.animate().scaleX(1f).scaleY(1f).rotationBy(360).setDuration(200);
-            for (int[] winningPosition : winningPositions) {
+
+            for (int [] winningPosition : winningPositions) {
+                //checking fr winning condition
                 if (gameState[winningPosition[0]] == gameState[winningPosition[1]] && gameState[winningPosition[1]] == gameState[winningPosition[2]] && gameState[winningPosition[0]] != 2) {
                     gameActive=false;
+
                     String winner="";
+
                     if(activePlayer==1)
                         winner="Zero";
                     else
                         winner="Cross";
+
                     Button playAgainButton=(Button)findViewById(R.id.playAgainButton);
                     TextView winnerTextView=(TextView)findViewById(R.id.winnerTextView);
+
                     winnerTextView.setText(winner + " is a Winner!");
+
                     playAgainButton.setVisibility(View.VISIBLE);
                     winnerTextView.setVisibility(View.VISIBLE);
                 }
             }
         }
+
+        //condition for the tie
         if(moves==9 && gameActive){
+
             Button playAgainButton=(Button)findViewById(R.id.playAgainButton);
             TextView winnerTextView=(TextView)findViewById(R.id.winnerTextView);
+
             winnerTextView.setText(" Tie!");
+
             playAgainButton.setVisibility(View.VISIBLE);
             winnerTextView.setVisibility(View.VISIBLE);
         }
     }
     public void playAgain(View view){
+
         Button playAgainButton=(Button)findViewById(R.id.playAgainButton);
         TextView winnerTextView=(TextView)findViewById(R.id.winnerTextView);
+
         playAgainButton.setVisibility(View.INVISIBLE);
         winnerTextView.setVisibility(View.INVISIBLE);
+
+        //reset the game
         GridLayout gridLayout = findViewById(R.id.gridLayout);
         for(int i=0; i<gridLayout.getChildCount(); i++) {
             ImageView counter = (ImageView) gridLayout.getChildAt(i);
@@ -70,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
         }
         for(int i=0;i<gameState.length;i++)
             gameState[i]=2;
+
         activePlayer=0;
         gameActive=true;
         moves=0;
